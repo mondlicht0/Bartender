@@ -1,0 +1,6 @@
+.cocktail_scrollview {
+}
+
+.cocktail_scrollview #unity-content-container {
+    height: 100%;
+}

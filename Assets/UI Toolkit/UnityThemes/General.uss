@@ -3,4 +3,7 @@
 
 .cocktail_scrollview #unity-content-container {
     height: 100%;
+    flex-direction: row;
+    width: auto;
+    flex-wrap: wrap;
 }

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.bitbebop.ui-toolkit-safe-area": {
+      "version": "https://github.com/artstorm/ui-toolkit-safe-area.git?path=/Packages/com.bitbebop.ui-toolkit-safe-area",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2e6d66033c1d6ffe4b2e359cb1f8a79f07ac8ae0"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.1",
       "depth": 1,

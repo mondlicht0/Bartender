@@ -1,18 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class BasePage : MonoBehaviour
+public abstract class BasePage
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public string Name;
+    protected Header Header;
+    public VisualElement Root;
+    public event Action OnToggle;
         
+    protected BasePage(VisualElement root, Header header, string name)
+    {
+        Name = name;
+        Header = header;
+        Root = root;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected abstract void SetupPage();
+
+    public void InvokeToggle()
     {
+        OnToggle?.Invoke();
+    }
+    
+    public void ChangePageTo(BasePage targetPage, params BasePage[] otherPages)
+    {
+        Debug.Log("Change" + targetPage.Name);
+        if (this is not HomePage)
+        {
+            Root.AddToClassList("left-transfom");
+        }
         
+        targetPage.Root.RemoveFromClassList("left-transfom");
+        targetPage.OnToggle?.Invoke();
+
+        foreach (var page in otherPages)
+        {
+            page.Root.AddToClassList("left-transfom");
+        }
+        
+        Header.ChangeHeaderTitle(Name);
     }
 }

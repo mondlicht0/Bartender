@@ -39,6 +39,6 @@ public abstract class BasePage
             page.Root.AddToClassList("left-transfom");
         }
         
-        Header.ChangeHeaderTitle(Name);
+        Header.ChangeHeaderTitle(Name.ToUpper());
     }
 }

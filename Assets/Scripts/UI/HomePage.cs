@@ -111,7 +111,6 @@ public class HomePage : BasePage
 
         Texture2D image = Resources.Load<Texture2D>(drink.ImageSource);
         Root.style.backgroundImage = new StyleBackground(image);
-        ChangeSwiper();
     }
 
     private void ChangeSwiper()

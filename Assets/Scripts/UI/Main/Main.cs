@@ -70,28 +70,37 @@ namespace UI.Main
             _lessonsView = Root.Q("Lessons");
             _recipeView = Root.Q("Recipe");
             _shoppingListView = Root.Q("ShoppingList");
-            _toolsView = Root.Q("Tools");
             _toolsOtherView = Root.Q("ToolsOther");
             _websitesView = Root.Q("Websites");
             _youtubeView = Root.Q("Youtube");
+            _toolsView = Root.Q("ToolsPage");
+            _websitesView = Root.Q("WebsitesPage");
+            _youtubeView = Root.Q("YoutubePage");
+            _aboutUsView = Root.Q("AboutUsPage");
         }
 
         private void InitPages()
         {
             _header = new Header(_headerView, _header, "Home");
             _homePage = new HomePage(_homeView, _header, "Home");
-            _collectionsPage = new CollectionsPage(_collectionsView, _header, "Home");
-            _lessonsPage = new LessonsPage(_lessonsView, _header, "Home");
-            _recipePage = new RecipePage(_recipeView, _header, "Home");
-            _recipesPage = new RecipesPage(_recipeView, _header, "Home");
-            _shoppingListPage = new ShoppingListPage(_shoppingListView, _header, "Home");
-            _toolsPage = new ToolsPage(_toolsView, _header, "Home");
-            _toolsOtherPage = new ToolsOtherPage(_toolsOtherView, _header, "Home");
-            _websitesPage = new WebsitesPage(_websitesView, _header, "Home");
-            _youtubePage = new YoutubePage(_youtubeView, _header, "Home");
-            _aboutUsPage = new AboutUsPage(_aboutUsView, _header, "Home");
-            _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "Home", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage);
-            _menu = new Menu(_footerView, _header, "Home", _homePage, _lessonsPage, _recipesPage, _collectionsPage, _toolsOtherPage);
+            _collectionsPage = new CollectionsPage(_collectionsView, _header, "Collections");
+            _lessonsPage = new LessonsPage(_lessonsView, _header, "Lessons");
+            _recipePage = new RecipePage(_recipeView, _header, "Recipe");
+            _recipesPage = new RecipesPage(_recipeView, _header, "Recipes");
+            _shoppingListPage = new ShoppingListPage(_shoppingListView, _header, "Shopping List");
+            _toolsPage = new ToolsPage(_toolsView, _header, "Tools & Other");
+            _websitesPage = new WebsitesPage(_websitesView, _header, "Tools & Other");
+            _youtubePage = new YoutubePage(_youtubeView, _header, "Tools & Other");
+            _aboutUsPage = new AboutUsPage(_aboutUsView, _header, "Tools & Other");
+
+            _toolsPage.OnReturn += () => _toolsPage.ChangePageTo(_toolsOtherPage);
+            _websitesPage.OnReturn += () => _websitesPage.ChangePageTo(_toolsOtherPage);
+            _youtubePage.OnReturn += () => _youtubePage.ChangePageTo(_toolsOtherPage);
+            _aboutUsPage.OnReturn += () => _aboutUsPage.ChangePageTo(_toolsOtherPage);
+            
+            _toolsOtherPage = new ToolsOtherPage(_toolsOtherView, _header, "Tools & Other", _toolsPage, _websitesPage, _youtubePage, _aboutUsPage);
+            _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage);
+            _menu = new Menu(_footerView, _header, "", _homePage, _lessonsPage, _recipesPage, _collectionsPage, _toolsOtherPage);
         }
         
         void OnEnable()

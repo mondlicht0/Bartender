@@ -74,3 +74,111 @@
     margin-right: 25px;
     height: 100%;
 }
+
+.active_step {
+}
+
+.first_step_inactive {
+    background-color: rgb(75, 75, 75);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.first_step_active {
+    flex-grow: 1;
+    background-color: rgba(31, 31, 31, 0.72);
+    border-top-left-radius: 0;
+    border-top-right-radius: 48px;
+    border-bottom-right-radius: 48px;
+    border-bottom-left-radius: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 76px;
+    margin-bottom: 52px;
+    padding-top: 0;
+    padding-right: 53px;
+    padding-bottom: 53px;
+    padding-left: 53px;
+    width: 917px;
+    position: absolute;
+}
+
+.second_step_active {
+    flex-grow: 1;
+    background-color: rgba(31, 31, 31, 0.72);
+    border-top-left-radius: 0;
+    border-top-right-radius: 48px;
+    border-bottom-right-radius: 48px;
+    border-bottom-left-radius: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0;
+    margin-bottom: 52px;
+    padding-top: 0;
+    padding-right: 53px;
+    padding-bottom: 53px;
+    padding-left: 53px;
+    width: 100%;
+    position: absolute;
+    right: 51px;
+}
+
+.second_step_inactive {
+    background-color: rgba(31, 31, 31, 0.43);
+    right: 51px;
+    position: absolute;
+}
+
+.third_step_active {
+    flex-grow: 1;
+    background-color: rgba(31, 31, 31, 0);
+    border-top-left-radius: 0;
+    border-top-right-radius: 48px;
+    border-bottom-right-radius: 48px;
+    border-bottom-left-radius: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0;
+    margin-bottom: 52px;
+    padding-top: 0;
+    padding-right: 53px;
+    padding-bottom: 53px;
+    padding-left: 53px;
+    width: 100%;
+    position: absolute;
+    right: -41px;
+}
+
+.third_step_inactive {
+    background-color: rgba(75, 75, 75, 0);
+    right: -41px;
+}
+
+.second_step_inactive VisualElement {
+    display: none;
+}
+
+.second_step_inactive Label {
+    display: none;
+}
+
+.third_step_inactive Label {
+    background-color: rgba(75, 75, 75, 0);
+    display: none;
+}
+
+.third_step_inactive VisualElement {
+    background-color: rgba(75, 75, 75, 0);
+    display: none;
+}
+
+.number {
+}
+
+.third_step_inactive .number {
+    background-color: rgba(75, 75, 75, 0);
+    display: flex;
+}
+
+.second_step_inactive .number {
+    display: flex;
+}

@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UnityThemes/General.uss?fileID=7433441132597879392&amp;guid=ad71f04d5b1502347b397dc0fb31ec2d&amp;type=3#General" />
+    <ui:VisualElement name="CollectionDrink" class="collections_drink">
+        <ui:VisualElement style="flex-grow: 0; height: 57px; width: 100%; background-color: rgba(55, 55, 55, 0.69); border-top-left-radius: 23px; border-top-right-radius: 23px; align-items: center; justify-content: center; flex-direction: row; padding-top: 9px;">
+            <ui:VisualElement name="1" style="flex-grow: 0; height: 28px; width: 31px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-34-00.png?fileID=2800000&amp;guid=8b52fd3ef209b2c4286615f8c8f38387&amp;type=3#image_2024-06-28_12-34-00&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 3px;" />
+            <ui:VisualElement name="2" style="flex-grow: 0; height: 28px; width: 31px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-34-00.png?fileID=2800000&amp;guid=8b52fd3ef209b2c4286615f8c8f38387&amp;type=3#image_2024-06-28_12-34-00&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 3px;" />
+            <ui:VisualElement name="3" style="flex-grow: 0; height: 28px; width: 31px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-34-00.png?fileID=2800000&amp;guid=8b52fd3ef209b2c4286615f8c8f38387&amp;type=3#image_2024-06-28_12-34-00&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 3px;" />
+            <ui:VisualElement name="4" style="flex-grow: 0; height: 28px; width: 31px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-34-00.png?fileID=2800000&amp;guid=8b52fd3ef209b2c4286615f8c8f38387&amp;type=3#image_2024-06-28_12-34-00&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 3px;" />
+            <ui:VisualElement name="5" style="flex-grow: 0; height: 28px; width: 31px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-34-00.png?fileID=2800000&amp;guid=8b52fd3ef209b2c4286615f8c8f38387&amp;type=3#image_2024-06-28_12-34-00&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 3px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; height: 57px; width: 100%; background-color: rgba(55, 55, 55, 0.69); border-top-left-radius: 23px; border-top-right-radius: 23px; align-items: center; justify-content: center; flex-direction: row; padding-top: 9px; margin-bottom: 4px;">
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" class="collections_drink_label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

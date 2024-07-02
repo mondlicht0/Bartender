@@ -1,4 +1,5 @@
-﻿using UnityEngine.UIElements;
+﻿using System;
+using UnityEngine.UIElements;
 
 public class Header : BasePage
 {
@@ -14,6 +15,7 @@ public class Header : BasePage
     private Label _toolsSide;
     private Label _aboutSide;
     private Label _changeSide;
+    public event Action OnCart;
 
     public Header(VisualElement root, Header header, string name) : base(root, header, name)
     {
@@ -26,8 +28,9 @@ public class Header : BasePage
         _sideMenu = Root.parent.Q("SideMenu");
         _menu = Root.Q("HeaderMenu");
         _settings = Root.Q("HeaderSettings");
-        _cart = Root.Q("HeaderMenu");
+        _cart = Root.Q("HeaderCart");
         _headerLabel = Root.Q<Label>("HeaderLabel");
+        _cart.RegisterCallback<ClickEvent>(evt => OnCart?.Invoke());
         _menu.RegisterCallback<ClickEvent>(ShowSideMenu);
     }
 

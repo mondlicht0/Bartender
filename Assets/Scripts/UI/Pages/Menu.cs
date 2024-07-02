@@ -12,18 +12,22 @@ public class Menu
 
     private HomePage _homePage;
     private LessonsPage _lessonsPage;
+    private LessonPage _lessonPage;
     private RecipesPage _recipesPage;
+    private RecipePage _recipePage;
     private CollectionsPage _collectionsPage;
     private ToolsOtherPage _otherPage;
     private Header _header;
     
-    public Menu(VisualElement root, Header header, string name, HomePage homePage, LessonsPage lessonsPage, RecipesPage recipesPage, CollectionsPage collectionsPage, ToolsOtherPage otherPage)
+    public Menu(VisualElement root, Header header, string name, HomePage homePage, LessonsPage lessonsPage, LessonPage lessonPage, RecipePage recipePage, RecipesPage recipesPage, CollectionsPage collectionsPage, ToolsOtherPage otherPage)
     {
         Root = root;
         _header = header;
         _homePage = homePage;
         _lessonsPage = lessonsPage;
+        _lessonPage = lessonPage;
         _recipesPage = recipesPage;
+        _recipePage = recipePage;
         _collectionsPage = collectionsPage;
         _otherPage = otherPage;
         SetupPage();
@@ -36,14 +40,11 @@ public class Menu
         _recipes = Root.Q("MenuRecipes");
         _collections = Root.Q("MenuCollections");
         _other = Root.Q("MenuTools");
-        
-        Debug.Log(_home == null);
-        
-        _home.RegisterCallback<ClickEvent>(evt => ChangePageTo(_homePage, _lessonsPage, _recipesPage, _collectionsPage, _otherPage));
-        _lessons.RegisterCallback<ClickEvent>(evt => ChangePageTo(_lessonsPage, _recipesPage, _collectionsPage, _otherPage));
-        _recipes.RegisterCallback<ClickEvent>(evt => ChangePageTo(_recipesPage, _lessonsPage, _collectionsPage, _otherPage));
-        _collections.RegisterCallback<ClickEvent>(evt => ChangePageTo(_collectionsPage, _recipesPage, _lessonsPage, _otherPage));
-        _other.RegisterCallback<ClickEvent>(evt => ChangePageTo(_otherPage, _collectionsPage, _recipesPage, _lessonsPage));
+        _home.RegisterCallback<ClickEvent>(evt => ChangePageTo(_homePage, _lessonsPage, _recipePage, _lessonPage, _recipesPage, _collectionsPage, _otherPage));
+        _lessons.RegisterCallback<ClickEvent>(evt => ChangePageTo(_lessonsPage, _recipesPage, _recipePage, _lessonPage, _collectionsPage, _otherPage));
+        _recipes.RegisterCallback<ClickEvent>(evt => ChangePageTo(_recipesPage, _lessonsPage, _lessonPage, _recipePage, _collectionsPage, _otherPage));
+        _collections.RegisterCallback<ClickEvent>(evt => ChangePageTo(_collectionsPage, _recipesPage, _lessonPage, _recipePage, _lessonsPage, _otherPage));
+        _other.RegisterCallback<ClickEvent>(evt => ChangePageTo(_otherPage, _collectionsPage, _lessonPage, _recipePage, _recipesPage, _lessonsPage));
     }
     
     public void ChangePageTo(BasePage targetPage, params BasePage[] otherPages)

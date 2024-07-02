@@ -276,6 +276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiDocument: {fileID: 539709345}
+  _collectionTemplate: {fileID: 9197481963319205126, guid: 04128dfc77432cd48830319957254a14, type: 3}
+  _shoppingListTemplate: {fileID: 9197481963319205126, guid: cd31a410038215b4d8483d4e82cccaaf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

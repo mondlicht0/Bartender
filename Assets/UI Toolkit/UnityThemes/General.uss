@@ -182,3 +182,80 @@
 .second_step_inactive .number {
     display: flex;
 }
+
+.level_inactive {
+    color: rgb(255, 255, 255);
+}
+
+.level_active {
+    color: rgb(150, 255, 123);
+    border-left-color: rgb(150, 255, 123);
+    border-right-color: rgb(150, 255, 123);
+    border-top-color: rgb(150, 255, 123);
+    border-bottom-color: rgb(150, 255, 123);
+    border-bottom-width: 3px;
+}
+
+.recipe_drink {
+}
+
+.collections_drink {
+    flex-grow: 0;
+    height: 265px;
+    width: 368px;
+    background-image: url("project://database/Assets/Art/Sprites/image_2024-06-28_09-53-27.png?fileID=2800000&guid=9b6daf8ca69cb8d48894267ebd049e6f&type=3#image_2024-06-28_09-53-27");
+    -unity-background-scale-mode: scale-to-fit;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.collections_drink_label {
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/UI%20Toolkit/Fonts/Kino.ttf?fileID=12800000&guid=f3975805ca9f0e94696a40c5d2d52b9c&type=3#Kino");
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+}
+
+.white_mark {
+}
+
+.asdf {
+    flex-grow: 0;
+    height: 160px;
+    background-color: rgb(41, 43, 40);
+    flex-direction: row;
+}
+
+.menu_dark {
+    flex-grow: 0;
+    height: 160px;
+    background-color: rgb(41, 43, 40);
+    flex-direction: row;
+    padding-top: 45px;
+    padding-right: 45px;
+    padding-bottom: 45px;
+    padding-left: 45px;
+}
+
+.white_theme {
+    background-color: rgba(255, 255, 255, 0.69);
+}
+
+.white_border {
+    border-left-color: rgba(255, 255, 255, 0.83);
+    border-right-color: rgba(255, 255, 255, 0.83);
+    border-top-color: rgba(255, 255, 255, 0.83);
+    border-bottom-color: rgba(255, 255, 255, 0.83);
+    border-top-width: 12px;
+    border-right-width: 12px;
+    border-bottom-width: 12px;
+    border-left-width: 12px;
+}
+
+.selected_drink_black {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-right-radius: 28px;
+    border-bottom-left-radius: 28px;
+}

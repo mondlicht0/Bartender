@@ -111,7 +111,7 @@ namespace UI.Main
                 "Flavor Profile Analyzer: Develop a feature that analyzes users' flavor preferences and suggests cocktail recipes tailored to their taste preferences. Provide recommendations for achieving balanced flavor profiles.",
                 "Ingredient Combinations: Showcase curated ingredient combinations and flavor pairings to inspire users' creativity. Include tips and tricks for achieving harmony in cocktails.",
                 "Taste Testing Events: Host virtual taste testing events where users can sample different flavor combinations and provide feedback. Collect data on popular flavor profiles and trends among users.",
-                ""
+                "Images/Lessons/4"
             ),
             new Lesson(
                 "Cocktail History and Trends",
@@ -206,13 +206,13 @@ namespace UI.Main
         private void InitPages()
         {
             _header = new Header(_headerView, _header, "Home");
-            _recipePage = new RecipePage(_recipeView, _header, "Recipe");
             _lessonPage = new LessonPage(_lessonView, _header, "Lessons");
             _lessonsPage = new LessonsPage(_lessonsView, _header, "Lessons", _lessonPage, Lessons1, Lessons2);
             _collectionsPage = new CollectionsPage(_collectionsView, _header, "Collections", _collectionTemplate, _recipePage);
-            _homePage = new HomePage(_homeView, _header, "Home", _recipePage, Drinks, _collectionsPage);
-            _recipesPage = new RecipesPage(_recipesView, _header, "Recipes", _recipePage, Drinks);
             _shoppingListPage = new ShoppingListPage(_shoppingListView, _header, "Shopping List", _shoppingListTemplate);
+            _recipePage = new RecipePage(_recipeView, _header, "Recipe", _shoppingListPage);
+            _recipesPage = new RecipesPage(_recipesView, _header, "Recipes", _recipePage, Drinks);
+            _homePage = new HomePage(_homeView, _header, "Home", _recipePage, Drinks, _collectionsPage);
             _toolsPage = new ToolsPage(_toolsView, _header, "Tools & Other");
             _websitesPage = new WebsitesPage(_websitesView, _header, "Tools & Other");
             _youtubePage = new YoutubePage(_youtubeView, _header, "Tools & Other");
@@ -223,12 +223,12 @@ namespace UI.Main
             _youtubePage.OnReturn += () => _youtubePage.ChangePageTo(_toolsOtherPage);
             _aboutUsPage.OnReturn += () => _aboutUsPage.ChangePageTo(_toolsOtherPage);
             _collectionsPage.OnShopping += () => _collectionsPage.ChangePageTo(_shoppingListPage);
-            _shoppingListPage.OnReturn += () => _shoppingListPage.ChangePageTo(_collectionsPage);
+            _shoppingListPage.OnReturn += () => _shoppingListPage.ChangePageTo(_homePage);
 
             _toolsOtherPage = new ToolsOtherPage(_toolsOtherView, _header, "Tools & Other", _toolsPage, _websitesPage, _youtubePage, _aboutUsPage);
             _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage);
             _menu = new Menu(_footerView, _header, "", _homePage, _lessonsPage, _lessonPage, _recipePage, _recipesPage, _collectionsPage, _toolsOtherPage);
-            _header.OnCart += () => _menu.ChangePageTo(_shoppingListPage);
+            _header.OnCart += () => _menu.ChangePageTo(null, _shoppingListPage);
         }
         
         void OnEnable()

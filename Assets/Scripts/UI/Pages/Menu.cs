@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Menu
@@ -9,6 +10,7 @@ public class Menu
     private VisualElement _recipes;
     private VisualElement _collections;
     private VisualElement _other;
+    private List<VisualElement> _icons = new();
 
     private HomePage _homePage;
     private LessonsPage _lessonsPage;
@@ -40,16 +42,28 @@ public class Menu
         _recipes = Root.Q("MenuRecipes");
         _collections = Root.Q("MenuCollections");
         _other = Root.Q("MenuTools");
-        _home.RegisterCallback<ClickEvent>(evt => ChangePageTo(_homePage, _lessonsPage, _recipePage, _lessonPage, _recipesPage, _collectionsPage, _otherPage));
-        _lessons.RegisterCallback<ClickEvent>(evt => ChangePageTo(_lessonsPage, _recipesPage, _recipePage, _lessonPage, _collectionsPage, _otherPage));
-        _recipes.RegisterCallback<ClickEvent>(evt => ChangePageTo(_recipesPage, _lessonsPage, _lessonPage, _recipePage, _collectionsPage, _otherPage));
-        _collections.RegisterCallback<ClickEvent>(evt => ChangePageTo(_collectionsPage, _recipesPage, _lessonPage, _recipePage, _lessonsPage, _otherPage));
-        _other.RegisterCallback<ClickEvent>(evt => ChangePageTo(_otherPage, _collectionsPage, _lessonPage, _recipePage, _recipesPage, _lessonsPage));
+        _icons.Add(_home);
+        _icons.Add(_lessons);
+        _icons.Add(_recipes);
+        _icons.Add(_collections);
+        _icons.Add(_other);
+        _home.RegisterCallback<ClickEvent>(evt => ChangePageTo(_home, _homePage, _lessonsPage, _recipePage, _lessonPage, _recipesPage, _collectionsPage, _otherPage));
+        _lessons.RegisterCallback<ClickEvent>(evt => ChangePageTo(_lessons, _lessonsPage, _recipesPage, _recipePage, _lessonPage, _collectionsPage, _otherPage));
+        _recipes.RegisterCallback<ClickEvent>(evt => ChangePageTo(_recipes, _recipesPage, _lessonsPage, _lessonPage, _recipePage, _collectionsPage, _otherPage));
+        _collections.RegisterCallback<ClickEvent>(evt => ChangePageTo(_collections, _collectionsPage, _recipesPage, _lessonPage, _recipePage, _lessonsPage, _otherPage));
+        _other.RegisterCallback<ClickEvent>(evt => ChangePageTo(_other, _otherPage, _collectionsPage, _lessonPage, _recipePage, _recipesPage, _lessonsPage));
     }
     
-    public void ChangePageTo(BasePage targetPage, params BasePage[] otherPages)
+    public void ChangePageTo(VisualElement icon, BasePage targetPage, params BasePage[] otherPages)
     {
-        Debug.Log("Change" + targetPage.Name);
+        if (icon != null)
+        {
+            foreach (VisualElement element in _icons)
+            {
+                element.RemoveFromClassList("green_menu_icon");
+            }
+            icon.AddToClassList("green_menu_icon");
+        }
         
         targetPage.Root.RemoveFromClassList("left-transfom");
         targetPage.InvokeToggle();

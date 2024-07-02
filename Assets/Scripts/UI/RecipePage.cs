@@ -14,11 +14,13 @@ public class RecipePage : BasePage
     private VisualElement _backArrow;
     private List<VisualElement> _stars;
     private Drink _currentDrink;
+    private ShoppingListPage _shoppingListPage;
 
     public event Action OnReturn;
     
-    public RecipePage(VisualElement root, Header header, string name) : base(root, header, name)
+    public RecipePage(VisualElement root, Header header, string name, ShoppingListPage shoppingListPage) : base(root, header, name)
     {
+        _shoppingListPage = shoppingListPage;
         SetupPage();
     }
     
@@ -44,48 +46,44 @@ public class RecipePage : BasePage
         Debug.Log(_stars.Count);
         foreach (VisualElement star in _stars)
         {
-            star.RegisterCallback<ClickEvent>(evt => Stars(_stars.IndexOf(star), star));
+            star.Q("InactiveStar").RegisterCallback<ClickEvent>(evt => Stars(_stars.IndexOf(star), star.Q("InactiveStar")));
+            star.Q("ActiveStar").RegisterCallback<ClickEvent>(evt => Stars(_stars.IndexOf(star), star.Q("ActiveStar")));
         }
     }
     
     private void Stars(int i, VisualElement star)
     {
-        foreach (VisualElement star1 in _stars)
-        {
-            VisualElement active = star1.Q("ActiveStar");
-            active.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
-        }
-        
-        bool isEmptyStar = star.Q("ActiveStar").style.display.Equals(new StyleEnum<DisplayStyle>(DisplayStyle.None));
+        int rating = 0;
         for (int j = 0; j < 5; j++)
         {
-            Debug.Log(i);
-            VisualElement activeStar = _stars[j].Q("ActiveStar");
-            VisualElement inactiveStar = _stars[j].Q("InactiveStar");
-
-            StyleEnum<DisplayStyle> active = new StyleEnum<DisplayStyle>(DisplayStyle.None);
-            StyleEnum<DisplayStyle> inactive = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
-
-            if (isEmptyStar)
+            _stars[i].Q("ActiveStar").style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+            //inactiveStar.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
+        }
+        
+        for (int j = 0; j < 5; j++)
+        {
+            if (star.name == "InactiveStar")
             {
-                Debug.Log("asf");
-                activeStar.style.display = active;
-                activeStar.style.display = inactive;
+                Debug.Log("InActive0");
+                rating = j;
+                if (j == i + 1)
+                {
+                    break;
+                }
+                Debug.Log("InActive");
+                _stars[j].Q("ActiveStar").style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
+                _stars[j].Q("InactiveStar").style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
             }
 
             else
             {
-                Debug.Log("asfaa");
-                activeStar.style.display = inactive;
-                inactiveStar.style.display = active;
-                if (j == i)
-                {
-                    break;
-                }
+                rating = 0;
+                _stars[j].Q("ActiveStar").style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+                _stars[j].Q("InactiveStar").style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
             }
         }
-
-        _currentDrink.Rating = i;
+        
+        _currentDrink.Rating = rating - 1;
     }
 
     private void Stars(int i)
@@ -117,7 +115,7 @@ public class RecipePage : BasePage
 
     private void AddToShoppingList()
     {
-        
+        _shoppingListPage.AddToShoppingList(_currentDrink);
     }
     
     public void ChangePageContent(Drink drink)

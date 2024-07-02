@@ -259,3 +259,7 @@
     border-bottom-right-radius: 28px;
     border-bottom-left-radius: 28px;
 }
+
+.green_menu_icon {
+    -unity-background-image-tint-color: rgb(150, 255, 123);
+}

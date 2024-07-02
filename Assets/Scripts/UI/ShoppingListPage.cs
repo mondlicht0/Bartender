@@ -21,12 +21,6 @@ public class ShoppingListPage : BasePage
         _backArrow = Root.Q<Button>();
         _list = Root.Q<ScrollView>();
         _backArrow.clicked += () => OnReturn?.Invoke();
-        Drink oldFashioned = new Drink("Old Fashioned", new List<string>(){"Label11", "Label22", "Label33", "level44"},
-            "Images/Drinks/Daiquiri", "Images/Recipes/Daiquiri", new List<string>(){"Labl3", "Lbel3", "Lel3", "leel3"});
-        AddToShoppingList(oldFashioned);
-        AddToShoppingList(oldFashioned);
-        AddToShoppingList(oldFashioned);
-        AddToShoppingList(oldFashioned);
     }
 
     public void AddToShoppingList(Drink drink)

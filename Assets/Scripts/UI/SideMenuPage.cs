@@ -30,7 +30,7 @@ public class SideMenuPage : BasePage
 
     protected override void SetupPage()
     {
-        _sideMenu = Root.parent.Q("SideMenu");
+        _sideMenu = Root.Q("SideMenu");
         _menuSide = _sideMenu.Q("HeaderMenu");
         
         _menuSide.RegisterCallback<ClickEvent>(HideSideMenu);

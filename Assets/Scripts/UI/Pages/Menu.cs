@@ -73,6 +73,6 @@ public class Menu
             page.Root.AddToClassList("left-transfom");
         }
         
-        _header.ChangeHeaderTitle(targetPage.Name);
+        _header.ChangeHeaderTitle(targetPage.Name.ToUpper());
     }
 }

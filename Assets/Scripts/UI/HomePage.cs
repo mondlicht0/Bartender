@@ -59,6 +59,7 @@ public class HomePage : BasePage
         InitSelected();
         InitDrinks();
         InitFavorites();
+        SetDrink();
     }
 
     public void SetRandomDrink()
@@ -87,6 +88,33 @@ public class HomePage : BasePage
         Texture2D image = Resources.Load<Texture2D>(drink.ImageSource);
         Root.style.backgroundImage = new StyleBackground(image);
         ChangeSwiper();
+        _currentDrink = drink;
+    }
+    
+    public void SetDrink()
+    {
+        Drink drink = _currentDrink;
+        string name = drink.Name;
+        string imageSource = drink.ImageSource;
+        List<string> points = drink.Points;
+
+        _drinkLabel.text = name.ToUpper();
+        List<Label> pointsList = _drinkPoints;
+
+        foreach (Label point in pointsList)
+        {
+            try
+            {
+                point.text = drink.Points[pointsList.IndexOf(point)];
+            }
+            catch (Exception e)
+            {
+                break;
+            }
+        }
+
+        Texture2D image = Resources.Load<Texture2D>(drink.ImageSource);
+        Root.style.backgroundImage = new StyleBackground(image);
         _currentDrink = drink;
     }
 

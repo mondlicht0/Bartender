@@ -16,6 +16,7 @@ public class Header : BasePage
     private Label _aboutSide;
     private Label _changeSide;
     public event Action OnCart;
+    public event Action OnSettings;
 
     public Header(VisualElement root, Header header, string name) : base(root, header, name)
     {
@@ -32,6 +33,7 @@ public class Header : BasePage
         _headerLabel = Root.Q<Label>("HeaderLabel");
         _cart.RegisterCallback<ClickEvent>(evt => OnCart?.Invoke());
         _menu.RegisterCallback<ClickEvent>(ShowSideMenu);
+        _settings.RegisterCallback<ClickEvent>(evt => OnSettings?.Invoke());
     }
 
     private void ShowSideMenu(ClickEvent evt)

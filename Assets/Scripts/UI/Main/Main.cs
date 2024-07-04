@@ -27,6 +27,7 @@ namespace UI.Main
         private ToolsOtherPage _toolsOtherPage;
         private WebsitesPage _websitesPage;
         private YoutubePage _youtubePage;
+        private SettingsPage _settingsPage;
 
         private VisualElement _sideMenuView;
         private VisualElement _headerView;
@@ -43,6 +44,7 @@ namespace UI.Main
         private VisualElement _toolsOtherView;
         private VisualElement _websitesView;
         private VisualElement _youtubeView;
+        private VisualElement _settingsView;
         
         private VisualElement swipeArea;
         private Vector2 startPoint;
@@ -179,6 +181,7 @@ namespace UI.Main
             OnSwipeRight += _homePage.SetRandomDrink;
             OnSwipeLeft += _homePage.SetRandomDrink;
             _recipePage.OnReturn += () => _recipePage.ChangePageTo(_recipesPage);
+            _settingsPage.OnReturn += () => _settingsPage.ChangePageTo(_homePage);
         }
 
         private void InitViews()
@@ -201,6 +204,7 @@ namespace UI.Main
             _websitesView = Root.Q("WebsitesPage");
             _youtubeView = Root.Q("YoutubePage");
             _aboutUsView = Root.Q("AboutUsPage");
+            _settingsView = Root.Q("SettingsPage");
         }
 
         private void InitPages()
@@ -217,6 +221,7 @@ namespace UI.Main
             _websitesPage = new WebsitesPage(_websitesView, _header, "Tools & Other");
             _youtubePage = new YoutubePage(_youtubeView, _header, "Tools & Other");
             _aboutUsPage = new AboutUsPage(_aboutUsView, _header, "Tools & Other");
+            _settingsPage = new SettingsPage(_settingsView, _header, "Settings");
 
             _toolsPage.OnReturn += () => _toolsPage.ChangePageTo(_toolsOtherPage);
             _websitesPage.OnReturn += () => _websitesPage.ChangePageTo(_toolsOtherPage);
@@ -229,6 +234,8 @@ namespace UI.Main
             _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage);
             _menu = new Menu(_footerView, _header, "", _homePage, _lessonsPage, _lessonPage, _recipePage, _recipesPage, _collectionsPage, _toolsOtherPage);
             _header.OnCart += () => _menu.ChangePageTo(null, _shoppingListPage, _toolsOtherPage, _collectionsPage, _recipePage, _recipesPage);
+            _header.OnSettings += () => _menu.ChangePageTo(null, _settingsPage, _toolsOtherPage, _collectionsPage,
+                _recipePage, _recipesPage, _shoppingListPage, _websitesPage, _youtubePage, _aboutUsPage);
         }
         
         void OnEnable()

@@ -123,6 +123,38 @@ public class RecipePage : BasePage
         _shoppingListPage.AddToShoppingList(_currentDrink);
     }
     
+    public void ChangePageContent()
+    {
+        Drink drink = _currentDrink;
+        Debug.Log(drink == null);
+        List<string> points = drink.Points;
+
+        List<Label> pointsList = _drinkPoints;
+
+        foreach (Label point in pointsList)
+        {
+            if (pointsList.IndexOf(point) > points.Count - 1)
+            {
+                continue;
+            }
+            
+            point.text = points[pointsList.IndexOf(point)];
+        }
+
+        Texture2D image = Resources.Load<Texture2D>(drink.RecipeImageSource);
+        _image.style.backgroundImage = new StyleBackground(image);
+        _currentDrink = drink;
+        foreach (VisualElement star in _stars)
+        {
+            VisualElement active = star.Q("ActiveStar");
+            VisualElement inactive = star.Q("InactiveStar");
+            active.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+            inactive.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
+        }
+        
+        Stars(PlayerPrefs.GetInt(drink.Name, 0));
+    }
+    
     public void ChangePageContent(Drink drink)
     {
         Debug.Log(drink == null);

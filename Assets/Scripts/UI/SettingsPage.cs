@@ -7,6 +7,7 @@ public class SettingsPage : BasePage
 {
     private List<string> _regionList = new();
     private List<string> _themeList = new();
+    private List<string> _unitList = new();
 
     private Label _regionLabel;
     private Button _nextRegion;
@@ -18,8 +19,14 @@ public class SettingsPage : BasePage
     private Button _backTheme;
     private int _currentThemeIndex;
     
+    private Label _unitLabel;
+    private Button _nextUnit;
+    private Button _backUnit;
+    private int _currentUnitIndex;
+    
     private Button _backArrow;
     public event Action OnReturn;
+    public event Action OnUnitChanged;
     
     public SettingsPage(VisualElement root, Header header, string name) : base(root, header, name)
     {
@@ -34,6 +41,9 @@ public class SettingsPage : BasePage
         _backTheme = Root.Q<Button>("BackTheme");
         _regionLabel = Root.Q<Label>("RegionLabel");
         _themeLabel = Root.Q<Label>("ThemeLabel");
+        _unitLabel = Root.Q<Label>("UnitLabel");
+        _backUnit = Root.Q<Button>("BackUnit");
+        _nextUnit = Root.Q<Button>("NextUnit");
         
         _regionList.Add("Russia");
         _regionList.Add("UK");
@@ -44,11 +54,17 @@ public class SettingsPage : BasePage
         _themeList.Add("Dark");
         _themeList.Add("White");
         
+        _unitList.Add("Millilitres (ml)");
+        _unitList.Add("Ounces (oz)");
+        
         _backArrow = Root.Q<Button>("BackArrow");
         _backArrow.clicked += () => OnReturn?.Invoke();
 
         _nextRegion.clicked += NextRegion;
         _backRegion.clicked += BackRegion;
+
+        _nextUnit.clicked += NextUnit;
+        _backUnit.clicked += BackUnit;
         
         string region = PlayerPrefs.GetString("Region");
 
@@ -60,10 +76,15 @@ public class SettingsPage : BasePage
         _regionLabel.text = region;
         _currentRegionIndex = _regionList.IndexOf(region);
 
-        CheckButtons();
+        CheckButtonsRegion();
+        
+        if (PlayerPrefs.GetInt("IsInMl") == 0)
+        {
+            NextUnit();
+        }
     }
 
-    private void CheckButtons()
+    private void CheckButtonsRegion()
     {
         _nextRegion.style.unityBackgroundImageTintColor =
             new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
@@ -82,6 +103,26 @@ public class SettingsPage : BasePage
                 new StyleColor(new Color(1f, 1f, 1f));
         }
     }
+    
+    private void CheckButtonsUnit()
+    {
+        _nextUnit.style.unityBackgroundImageTintColor =
+            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
+        _backUnit.style.unityBackgroundImageTintColor =
+            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
+
+        if (_currentRegionIndex == 0)
+        {
+            _backUnit.style.unityBackgroundImageTintColor =
+                new StyleColor(new Color(1f, 1f, 1f));
+        }
+
+        if (_currentRegionIndex == _regionList.Count - 1)
+        {
+            _nextUnit.style.unityBackgroundImageTintColor =
+                new StyleColor(new Color(1f, 1f, 1f));
+        }
+    }
 
     private void NextRegion()
     {
@@ -93,7 +134,7 @@ public class SettingsPage : BasePage
         
         _regionLabel.text = _regionList[_currentRegionIndex];
 
-        CheckButtons();
+        CheckButtonsRegion();
         
         PlayerPrefs.SetString("Region", _regionList[_currentRegionIndex]);
     }
@@ -108,66 +149,40 @@ public class SettingsPage : BasePage
 
         _regionLabel.text = _regionList[_currentRegionIndex];
 
-        CheckButtons();
+        CheckButtonsRegion();
         
         PlayerPrefs.SetString("Region", _regionList[_currentRegionIndex]);
     }
-
-    private void NextTheme()
+    
+    private void NextUnit()
     {
-        if (_currentThemeIndex >= _themeList.Count)
+        _currentUnitIndex++;
+        if (_currentUnitIndex >= _unitList.Count)
         {
-            _currentThemeIndex = 0;
+            _currentUnitIndex = 0;
         }
-
-        _regionLabel.text = _themeList[_currentThemeIndex];
         
-        _nextTheme.style.unityBackgroundImageTintColor =
-            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
-        _backTheme.style.unityBackgroundImageTintColor =
-            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
+        _unitLabel.text = _unitList[_currentUnitIndex];
 
-        if (_currentThemeIndex == 0)
-        {
-            _backTheme.style.unityBackgroundImageTintColor =
-                new StyleColor(new Color(1f, 1f, 1f));
-        }
-
-        if (_currentThemeIndex == _themeList.Count - 1)
-        {
-            _nextTheme.style.unityBackgroundImageTintColor =
-                new StyleColor(new Color(1f, 1f, 1f));
-        }
-
-        _currentThemeIndex++;
+        CheckButtonsUnit();
+        
+        PlayerPrefs.SetInt("IsInMl", _currentUnitIndex);
+        OnUnitChanged?.Invoke();
     }
 
-    private void BackTheme()
+    private void BackUnit()
     {
-        if (_currentThemeIndex < 0)
+        _currentUnitIndex--;
+        if (_currentUnitIndex < 0)
         {
-            _currentThemeIndex = _themeList.Count - 1;
+            _currentUnitIndex = _unitList.Count - 1;
         }
 
-        _regionLabel.text = _themeList[_currentThemeIndex];
+        _unitLabel.text = _unitList[_currentUnitIndex];
+
+        CheckButtonsUnit();
         
-        _nextTheme.style.unityBackgroundImageTintColor =
-            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
-        _backTheme.style.unityBackgroundImageTintColor =
-            new StyleColor(new Color(0.2039216f, 0.9960784f, 0.007843138f));
-
-        if (_currentThemeIndex == 0)
-        {
-            _backTheme.style.unityBackgroundImageTintColor =
-                new StyleColor(new Color(1f, 1f, 1f));
-        }
-
-        if (_currentThemeIndex == _themeList.Count - 1)
-        {
-            _nextTheme.style.unityBackgroundImageTintColor =
-                new StyleColor(new Color(1f, 1f, 1f));
-        }
-
-        _currentThemeIndex--;
+        PlayerPrefs.SetInt("IsInMl", _currentUnitIndex);
+        OnUnitChanged?.Invoke();
     }
 }

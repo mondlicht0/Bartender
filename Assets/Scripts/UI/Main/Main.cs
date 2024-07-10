@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,6 +9,8 @@ namespace UI.Main
 {
     public class Main : MonoBehaviour
     {
+        public static Main Instance;
+        
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private VisualTreeAsset _collectionTemplate;
         [SerializeField] private VisualTreeAsset _shoppingListTemplate;
@@ -54,10 +58,19 @@ namespace UI.Main
         public List<Lesson> Lessons1 { get; private set; }
         public List<Lesson> Lessons2 { get; private set; }
 
-        public List<Drink> Drinks { get; private set; }
+        public List<Drink> InitialDrinks = new();
+        public List<Drink> DrinksInOunce = new();
+        public List<Drink> DrinksInMl = new();
+        public List<Drink> Drinks = new();
+        public bool IsInMl = true;
 
         public event Action OnSwipeLeft;
         public event Action OnSwipeRight;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void InitLevels()
         {
@@ -138,10 +151,40 @@ namespace UI.Main
             )
         };
         }
+
+        public void GetRecipesInMls(List<Drink> drinks)
+        {
+            foreach (Drink drink in drinks)
+            {
+                foreach (string point in drink.Points.ToList())
+                {
+                    drink.Points[drink.Points.IndexOf(point)] = ConvertOuncesToMilliliters(point);
+                }
+            }
+        }
+        
+        private string ConvertOuncesToMilliliters(string input)
+        {
+            string pattern = @"(\d+\.?\d*)\s*ounces|\b(\d+\.?\d*)\s*ounce\b";
+            double OuncesToMilliliters(double ounces) => ounces * 29.5735;
+            string result = Regex.Replace(input, pattern, match =>
+            {
+                double value;
+                if (double.TryParse(match.Groups[1].Value, out value) || double.TryParse(match.Groups[2].Value, out value))
+                {
+                    double mlValue = OuncesToMilliliters(value);
+                    string mlText = ((int)mlValue).ToString();
+                    return mlText + (match.Groups[0].Value.Contains("ounces") ? " mls" : " ml");
+                }
+                return match.Value;
+            });
+
+            return result;
+        }
         
         private void InitDrinks()
         {
-            Drinks = new List<Drink>
+            DrinksInOunce = new List<Drink>
             {
                 new Drink("Margarita", new List<string> { "2 ounces tequila", "1 ounce lime juice", "1/2 ounce orange liqueur (optional)", "Salt for rim (optional)" }, "", "Images/Images/Margarita", new List<string>()),
                 new Drink("Old Fashioned", new List<string> { "2 ounces bourbon or rye whiskey", "1/2 ounce sugar syrup", "2 dashes Angostura bitters", "Orange peel for garnish (optional)" }, "", "Images/Images/Old Fashioned", new List<string>()),
@@ -165,6 +208,50 @@ namespace UI.Main
                 new Drink("French Connection", new List<string> { "1/2 ounce cognac", "1/2 ounce Amaretto", "Orange twist for garnish" }, "", "Images/Images/French Connection", new List<string>()),
                 new Drink("B-52", new List<string> { "1/3 ounce Kahlúa", "1/3 ounce Baileys Irish Cream", "1/3 ounce Grand Marnier", "Coffee bean for garnish" }, "", "Images/Images/B-52", new List<string>()),
             };
+
+            DrinksInMl = new List<Drink>
+            {
+                new Drink("Margarita", new List<string> { "2 ounces tequila", "1 ounce lime juice", "1/2 ounce orange liqueur (optional)", "Salt for rim (optional)" }, "", "Images/Images/Margarita", new List<string>()),
+                new Drink("Old Fashioned", new List<string> { "2 ounces bourbon or rye whiskey", "1/2 ounce sugar syrup", "2 dashes Angostura bitters", "Orange peel for garnish (optional)" }, "", "Images/Images/Old Fashioned", new List<string>()),
+                new Drink("Daiquiri", new List<string> { "2 ounces white rum", "1 ounce lime juice", "1/2 ounce simple syrup" }, "", "Images/Images/Daiquiri", new List<string>()),
+                new Drink("Mojito", new List<string> { "2 ounces white rum", "1 ounce lime juice", "1/2 ounce simple syrup", "6 mint leaves", "Soda water", "Lime wedge for garnish" }, "", "Images/Images/Mojito", new List<string>()),
+                new Drink("Negroni", new List<string> { "1 ounce gin", "1 ounce Campari", "1 ounce sweet vermouth", "Orange peel for garnish (optional)" }, "", "Images/Images/Negroni", new List<string>()),
+                new Drink("Espresso Martini", new List<string> { "1.5 ounces vodka", "1 ounce espresso", "1/2 ounce coffee liqueur", "3 coffee beans for garnish" }, "", "Images/Images/Espresso Martini", new List<string>()),
+                new Drink("Aperol Spritz", new List<string> { "3 ounces Aperol", "2 ounces prosecco", "1 ounce soda water", "Orange slice for garnish" }, "", "Images/Images/Aperol Spritz", new List<string>()),
+                new Drink("French 75", new List<string> { "2 ounces gin", "1/2 ounce lemon juice", "1/2 ounce simple syrup", "Champagne", "Lemon peel for garnish" }, "", "Images/Images/French 75", new List<string>()),
+                new Drink("Penicillin", new List<string> { "2 ounces blended Scotch whisky", "1/2 ounce lemon juice", "1/2 ounce honey syrup", "1/4 ounce ginger syrup", "Smoked peat garnish (optional)" }, "Images/Images/Penicillin", "", new List<string>()),
+                new Drink("Aviation", new List<string> { "2 ounces gin", "1/2 ounce lemon juice", "1/4 ounce maraschino liqueur", "1/4 ounce crème de violette", "Cherry for garnish" }, "", "Images/Images/Aviation", new List<string>()),
+                new Drink("Pina Colada", new List<string> { "2 ounces light rum", "1 ounce coconut cream", "1 ounce pineapple juice", "Pineapple wedge and cherry for garnish" }, "", "Images/Images/Pina Colada", new List<string>()),
+                new Drink("Chi Chi", new List<string> { "1 ounce vodka", "1 ounce maraschino liqueur", "1 ounce pineapple juice", "Milk", "Cherry for garnish" }, "", "Images/Images/Chi Chi", new List<string>()),
+                new Drink("Mai Tai", new List<string> { "2 ounces light rum", "1 ounce orgeat liqueur", "1 ounce almond syrup", "1 ounce lime juice", "Pineapple wedge and cherry for garnish" }, "", "Images/Images/Mai Tai", new List<string>()),
+                new Drink("Zombie", new List<string> { "2 ounces light rum", "1 ounce dark rum", "1 ounce rum liqueur", "1 ounce pineapple juice", "1 ounce orange juice", "1 ounce lime juice", "1/2 ounce grapefruit juice", "Pineapple wedge and cherry for garnish" }, "", "Images/Images/Zombie", new List<string>()),
+                new Drink("Cosmopolitan", new List<string> { "1 1/2 ounces vodka", "1/2 ounce Cointreau", "1/2 ounce cranberry juice", "1/2 ounce lime juice", "Lemon twist for garnish" }, "", "Images/Images/Cosmopolitan", new List<string>()),
+                new Drink("Moscow Mule", new List<string> { "2 ounces vodka", "1/2 ounce lime juice", "4 ounces ginger beer", "Lime wedge for garnish" }, "", "Images/Images/Moscow Mule", new List<string>()),
+                new Drink("Greyhound", new List<string> { "2 ounces vodka", "4 ounces grapefruit juice", "Lemon twist for garnish" }, "", "Images/Images/Greyhound", new List<string>()),
+                new Drink("Vodka Martini", new List<string> { "2 ounces vodka", "1/2 ounce dry vermouth", "Olive for garnish" }, "", "Images/Images/Vodka Martini", new List<string>()),
+                new Drink("Irish Coffee", new List<string> { "2 ounces Irish whiskey", "1/2 ounce sugar syrup", "Hot coffee", "Whipped cream for garnish" }, "", "Images/Images/Irish Coffee", new List<string>()),
+                new Drink("French Connection", new List<string> { "1/2 ounce cognac", "1/2 ounce Amaretto", "Orange twist for garnish" }, "", "Images/Images/French Connection", new List<string>()),
+                new Drink("B-52", new List<string> { "1/3 ounce Kahlúa", "1/3 ounce Baileys Irish Cream", "1/3 ounce Grand Marnier", "Coffee bean for garnish" }, "", "Images/Images/B-52", new List<string>()),
+            };
+            
+            GetRecipesInMls(DrinksInMl);
+
+            IsInMl = ConvertToBool(PlayerPrefs.GetInt("IsInMl", 0));
+            if (IsInMl)
+            {
+                Debug.Log('d');
+                Drinks = DrinksInMl;
+            }
+
+            else
+            {
+                Drinks = DrinksInOunce;
+            }
+        }
+
+        private bool ConvertToBool(int value)
+        {
+            return value != 0;
         }
 
         private void Start()
@@ -214,9 +301,9 @@ namespace UI.Main
             _lessonsPage = new LessonsPage(_lessonsView, _header, "Lessons", _lessonPage, Lessons1, Lessons2);
             _shoppingListPage = new ShoppingListPage(_shoppingListView, _header, "Shopping List", _shoppingListTemplate);
             _recipePage = new RecipePage(_recipeView, _header, "Recipe", _shoppingListPage, this);
-            _recipesPage = new RecipesPage(_recipesView, _header, "Recipes", _recipePage, Drinks);
+            _recipesPage = new RecipesPage(_recipesView, _header, "Recipes", _recipePage);
             _collectionsPage = new CollectionsPage(_collectionsView, _header, "Collections", _collectionTemplate, _recipePage);
-            _homePage = new HomePage(_homeView, _header, "Home", _recipePage, Drinks, _collectionsPage);
+            _homePage = new HomePage(_homeView, _header, "Home", _recipePage, _collectionsPage);
             _toolsPage = new ToolsPage(_toolsView, _header, "Tools & Other");
             _websitesPage = new WebsitesPage(_websitesView, _header, "Tools & Other");
             _youtubePage = new YoutubePage(_youtubeView, _header, "Tools & Other");
@@ -236,6 +323,17 @@ namespace UI.Main
             _header.OnCart += () => _menu.ChangePageTo(null, _shoppingListPage, _toolsOtherPage, _collectionsPage, _recipePage, _recipesPage);
             _header.OnSettings += () => _menu.ChangePageTo(null, _settingsPage, _toolsOtherPage, _collectionsPage,
                 _recipePage, _recipesPage, _shoppingListPage, _websitesPage, _youtubePage, _aboutUsPage);
+
+            _settingsPage.OnUnitChanged += ChangeDrinks;
+        }
+
+        private void ChangeDrinks()
+        {
+            IsInMl = !ConvertToBool(PlayerPrefs.GetInt("IsInMl", 0));
+
+            Drinks = IsInMl ? DrinksInMl : DrinksInOunce;
+            _homePage.SetDrink();
+            _recipePage.ChangePageContent();
         }
         
         void OnEnable()

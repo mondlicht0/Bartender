@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UI.Main;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
@@ -12,8 +13,8 @@ public class HomePage : BasePage
     private Label _drinkLabel;
     private GroupBox _drinkRecipe;
     private List<Label> _drinkPoints;
-    private List<Drink> _drinks = new();
     private Drink _currentDrink;
+    private int _currentDrinkIndex;
 
     private RecipePage _recipePage;
     private VisualElement _swiper;
@@ -24,17 +25,17 @@ public class HomePage : BasePage
     private List<VisualElement> _favorites = new();
     private CollectionsPage _collectionsPage;
     
-    public HomePage(VisualElement root, Header header, string name, RecipePage recipePage, List<Drink> drinks, CollectionsPage collectionsPage) : base(root, header, name)
+    public HomePage(VisualElement root, Header header, string name, RecipePage recipePage, CollectionsPage collectionsPage) : base(root, header, name)
     {
         _collectionsPage = collectionsPage;
-        _drinks = drinks;
         _recipePage = recipePage;
         SetupPage();
     }
 
     private void InitDrinks()
     {
-        _currentDrink = _drinks[0];
+        _currentDrink = Main.Instance.Drinks[0];
+        _currentDrinkIndex = 0;
         _recipePage.ChangePageContent(_currentDrink);
 
         _seeRecipeButton.clicked += SeeRecipe;
@@ -64,7 +65,8 @@ public class HomePage : BasePage
 
     public void SetRandomDrink()
     {
-        Drink drink = _drinks[Random.Range(0, _drinks.Count)];
+        Drink drink = Main.Instance.Drinks[Random.Range(0, Main.Instance.Drinks.Count)];
+        _currentDrinkIndex = Random.Range(0, Main.Instance.Drinks.Count);
 
         string name = drink.Name;
         string imageSource = drink.ImageSource;
@@ -93,7 +95,7 @@ public class HomePage : BasePage
     
     public void SetDrink()
     {
-        Drink drink = _currentDrink;
+        Drink drink = Main.Instance.Drinks[_currentDrinkIndex];
         string name = drink.Name;
         string imageSource = drink.ImageSource;
         List<string> points = drink.Points;
@@ -141,7 +143,7 @@ public class HomePage : BasePage
                 string selectedDrinkName = favorite.parent.parent.name;
                 Debug.Log(selectedDrinkName);
                 Drink drink = null;
-                foreach (Drink drink1 in _drinks)
+                foreach (Drink drink1 in Main.Instance.Drinks)
                 {
                     Debug.Log(drink1.Name);
                     if (drink1.Name.Replace(" ", "") == selectedDrinkName)
@@ -158,11 +160,12 @@ public class HomePage : BasePage
     {
         string selectedDrinkName = element.name;
         Drink drink = null;
-        foreach (Drink drink1 in _drinks)
+        foreach (Drink drink1 in Main.Instance.Drinks)
         {
             if (drink1.Name.Replace(" ", "") == selectedDrinkName)
             {
                 drink = drink1;
+                _currentDrinkIndex = Main.Instance.Drinks.IndexOf(drink1);
             }
         }
 

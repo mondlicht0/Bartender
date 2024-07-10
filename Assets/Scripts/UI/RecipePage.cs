@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UI.Main;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,11 +16,13 @@ public class RecipePage : BasePage
     private List<VisualElement> _stars;
     private Drink _currentDrink;
     private ShoppingListPage _shoppingListPage;
+    private Main _mainPage;
 
     public event Action OnReturn;
     
-    public RecipePage(VisualElement root, Header header, string name, ShoppingListPage shoppingListPage) : base(root, header, name)
+    public RecipePage(VisualElement root, Header header, string name, ShoppingListPage shoppingListPage, Main mainPage) : base(root, header, name)
     {
+        _mainPage = mainPage;
         _shoppingListPage = shoppingListPage;
         SetupPage();
     }
@@ -83,6 +86,7 @@ public class RecipePage : BasePage
             }
         }
         
+        PlayerPrefs.SetInt(_currentDrink.Name, rating);
         _currentDrink.Rating = rating - 1;
     }
 
@@ -110,6 +114,7 @@ public class RecipePage : BasePage
             }
         }
 
+        PlayerPrefs.SetInt(_currentDrink.Name, i);
         _currentDrink.Rating = i;
     }
 
@@ -145,6 +150,7 @@ public class RecipePage : BasePage
             active.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
             inactive.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
         }
-        Stars(drink.Rating);
+        
+        Stars(PlayerPrefs.GetInt(drink.Name, 0));
     }
 }

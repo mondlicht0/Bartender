@@ -601,7 +601,7 @@
                     </ui:ScrollView>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="SideMenu" class="left-transfom" style="flex-grow: 1; position: absolute; height: 100%; width: 70%; background-color: rgba(0, 0, 0, 0.44); padding-top: 0; padding-left: 39px; transition-duration: 0.2s;">
+            <ui:VisualElement name="SideMenu" class="left-transfom" style="flex-grow: 1; position: absolute; height: 100%; width: 70%; background-color: rgba(0, 0, 0, 0.36); padding-top: 0; padding-left: 39px; transition-duration: 0.2s;">
                 <ui:VisualElement name="HeaderMenu" style="flex-grow: 0; width: 200px; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-26_01-23-14.png?fileID=2800000&amp;guid=fa93e6254b573e64383ef98c05b7d5da&amp;type=3#image_2024-06-26_01-23-14&quot;); -unity-background-scale-mode: scale-to-fit; max-width: 162px; margin-right: 77px; height: 140px; -unity-background-image-tint-color: rgb(150, 255, 123);" />
                 <ui:GroupBox style="margin-top: 241px;">
                     <ui:Label tabindex="-1" text="Home" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Home" style="color: rgb(255, 255, 255); font-size: 69px; -unity-font-definition: initial; -unity-font: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/JockeyOne-Regular.ttf?fileID=12800000&amp;guid=77001074282a6db4d82dea60692f5281&amp;type=3#JockeyOne-Regular&quot;);" />

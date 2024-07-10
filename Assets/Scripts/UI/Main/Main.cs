@@ -213,7 +213,7 @@ namespace UI.Main
             _lessonPage = new LessonPage(_lessonView, _header, "Lessons");
             _lessonsPage = new LessonsPage(_lessonsView, _header, "Lessons", _lessonPage, Lessons1, Lessons2);
             _shoppingListPage = new ShoppingListPage(_shoppingListView, _header, "Shopping List", _shoppingListTemplate);
-            _recipePage = new RecipePage(_recipeView, _header, "Recipe", _shoppingListPage);
+            _recipePage = new RecipePage(_recipeView, _header, "Recipe", _shoppingListPage, this);
             _recipesPage = new RecipesPage(_recipesView, _header, "Recipes", _recipePage, Drinks);
             _collectionsPage = new CollectionsPage(_collectionsView, _header, "Collections", _collectionTemplate, _recipePage);
             _homePage = new HomePage(_homeView, _header, "Home", _recipePage, Drinks, _collectionsPage);

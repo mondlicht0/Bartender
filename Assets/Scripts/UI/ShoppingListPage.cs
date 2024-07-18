@@ -26,6 +26,7 @@ public class ShoppingListPage : BasePage
     public void AddToShoppingList(Drink drink)
     {
         VisualElement newDrink = _template.CloneTree();
+        newDrink.name = drink.Name;
         List<Label> ingredients = newDrink.Q("Ingredients").Query<Label>().ToList();
         Label title = newDrink.Q<Label>("Title");
 
@@ -33,6 +34,7 @@ public class ShoppingListPage : BasePage
         {
             if (ingredients.IndexOf(ingredient) > drink.Points.Count - 1)
             {
+                ingredient.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
                 continue;
             }
             
@@ -41,5 +43,12 @@ public class ShoppingListPage : BasePage
 
         title.text = drink.Name.ToUpper();
         _list.Add(newDrink);
+    }
+
+    public void RemoveFromShoppingList(Drink drink)
+    {
+        VisualElement element = Root.Q(drink.Name);
+        drink.IsInList = false;
+        _list.Remove(element);
     }
 }

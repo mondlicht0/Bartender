@@ -13,8 +13,6 @@ public class CollectionsPage : BasePage
     
     protected override void SetupPage()
     {
-        Drink oldFashioned = new Drink("Old Fashioned", new List<string>(){"Label11", "Label22", "Label33", "level44"},
-            "Images/Drinks/Daiquiri", "Images/Recipes/Daiquiri", new List<string>(){"Labl3", "Lbel3", "Lel3", "leel3"});
         _list = Root.Q("List");
         _shoppingButton = Root.Q("ShoppingButton");
         _shoppingButton.RegisterCallback<ClickEvent>(evt => OnShopping?.Invoke());
@@ -23,6 +21,7 @@ public class CollectionsPage : BasePage
     public void AddNewDrink(Drink drink)
     {
         VisualElement newDrink = _collectionDrinkTemplate.CloneTree();
+        newDrink.name = drink.Name;
         VisualElement collectionDrink = newDrink.Q("CollectionDrink");
         Label title = newDrink.Q<Label>("Title");
         Debug.Log(drink.ImageSource);
@@ -30,6 +29,12 @@ public class CollectionsPage : BasePage
         title.text = drink.Name.ToUpper();
         _list.Add(newDrink);
         newDrink.RegisterCallback<ClickEvent>(evt => GoToRecipePage(drink));
+    }
+
+    public void RemoveDrink(Drink drink)
+    {
+        VisualElement newDrink = Root.Q(drink.Name);
+        _list.Remove(newDrink);
     }
 
     private void GoToRecipePage(Drink drink)

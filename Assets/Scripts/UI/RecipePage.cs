@@ -34,7 +34,7 @@ public class RecipePage : BasePage
         _addShopping = Root.Q("AddShopping");
         _shoppingImage = Root.Q("ShoppingImage");
         _backArrow = Root.Q<Button>();
-        _shoppingLabel = Root.Q<Label>();
+        _shoppingLabel = _addShopping.Q<Label>();
         _stars = Root.Query<VisualElement>("Stars").ToList();
         
         _shoppingImage.RegisterCallback<ClickEvent>(evt => AddToShoppingList());
@@ -120,7 +120,19 @@ public class RecipePage : BasePage
 
     private void AddToShoppingList()
     {
-        _shoppingListPage.AddToShoppingList(_currentDrink);
+        if (_currentDrink.IsInList)
+        {
+            _shoppingListPage.RemoveFromShoppingList(_currentDrink);
+            _shoppingLabel.text = "Add to\n shopping list";
+            _currentDrink.IsInList = false;
+        }
+
+        else
+        {
+            _shoppingListPage.AddToShoppingList(_currentDrink);
+            _shoppingLabel.text = "Remove from\n shopping list";
+            _currentDrink.IsInList = true;
+        }
     }
     
     public void ChangePageContent()

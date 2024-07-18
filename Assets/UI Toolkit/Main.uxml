@@ -414,7 +414,7 @@
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="AddShopping" style="flex-grow: 0; padding-top: 0; height: 252px; margin-top: 101px; margin-right: 74px;">
-                            <ui:Label tabindex="-1" text="add a &#10;shopping list" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(150, 255, 123); -unity-text-align: upper-center; font-size: 28px;" />
+                            <ui:Label tabindex="-1" text="Add to &#10;shopping list" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(150, 255, 123); -unity-text-align: upper-center; font-size: 28px;" />
                             <ui:VisualElement name="ShoppingImage" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_12-39-07.png?fileID=2800000&amp;guid=96d2982b16af76743b8fe04c2a0d6cec&amp;type=3#image_2024-06-28_12-39-07&quot;); -unity-background-scale-mode: scale-to-fit; height: 60px; margin-top: 23px;" />
                         </ui:VisualElement>
                     </ui:VisualElement>
@@ -514,7 +514,7 @@
                 <ui:VisualElement name="ShoppingList" class="left-transfom" style="flex-grow: 1; background-image: none; -unity-background-scale-mode: scale-and-crop; position: absolute; height: 100%; width: 100%; background-color: rgba(41, 43, 40, 0.96); padding-top: 97px; padding-right: 45px; padding-bottom: 45px; padding-left: 45px;">
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackArrow" style="background-image: url(&quot;project://database/Assets/Art/Sprites/image_2024-06-28_10-52-10.png?fileID=2800000&amp;guid=14ed97eb6e900ab438cb097aa2b7967d&amp;type=3#image_2024-06-28_10-52-10&quot;); background-color: rgba(188, 188, 188, 0); -unity-background-scale-mode: scale-to-fit; rotate: 180deg; width: 50px; height: 50px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
                     <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="List" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="height: 87%;">
-                        <ui:Instance template="ShoppingDrink" name="ShoppingDrink" />
+                        <ui:Instance template="ShoppingDrink" name="ShoppingDrink" style="display: none;" />
                     </ui:ScrollView>
                 </ui:VisualElement>
                 <ui:VisualElement name="ToolsOther" class="left-transfom" style="flex-grow: 1; background-color: rgba(41, 43, 40, 0.89); padding-top: 79px; padding-right: 79px; padding-bottom: 79px; padding-left: 79px;">

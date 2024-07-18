@@ -138,21 +138,42 @@ public class HomePage : BasePage
         _favorites = Root.Query<VisualElement>("Loves").ToList();
         foreach (VisualElement favorite in _favorites)
         {
-            favorite.RegisterCallback<ClickEvent>(evt =>
+            favorite.RegisterCallback<ClickEvent>(_ =>
             {
-                string selectedDrinkName = favorite.parent.parent.name;
-                Debug.Log(selectedDrinkName);
-                Drink drink = null;
-                foreach (Drink drink1 in Main.Instance.Drinks)
-                {
-                    Debug.Log(drink1.Name);
-                    if (drink1.Name.Replace(" ", "") == selectedDrinkName)
-                    {
-                        drink = drink1;
-                    }
-                }
-                _collectionsPage.AddNewDrink(drink);
+                AddDrinkToFavorite(favorite);
             });
+        }
+    }
+
+    private void AddDrinkToFavorite(VisualElement favoriteButton)
+    {
+        string selectedDrinkName = favoriteButton.parent.parent.name;
+        Drink drink = null;
+        foreach (Drink drink1 in Main.Instance.Drinks)
+        {
+            if (drink1.Name.Replace(" ", "") == selectedDrinkName)
+            {
+                drink = drink1;
+                drink1.IsInFavorite = !drink1.IsInFavorite;
+            }
+        }
+
+        if (drink == null)
+        {
+            return;
+        }
+
+        favoriteButton.style.unityBackgroundImageTintColor = !drink.IsInFavorite ? new StyleColor(Color.white) : new StyleColor(Color.green);
+        if (drink.IsInFavorite)
+        {
+            drink.IsInFavorite = true;
+            _collectionsPage.AddNewDrink(drink);
+        }
+
+        else
+        {
+            drink.IsInFavorite = false;
+            _collectionsPage.RemoveDrink(drink);
         }
     }
     
@@ -207,6 +228,8 @@ public class HomePage : BasePage
 
 public class Drink
 {
+    public bool IsInFavorite;
+    public bool IsInList;
     public int Rating = 0;
     public string Name;
     public List<string> Points;

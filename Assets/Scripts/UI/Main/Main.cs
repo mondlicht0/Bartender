@@ -318,7 +318,7 @@ namespace UI.Main
             _shoppingListPage.OnReturn += () => _shoppingListPage.ChangePageTo(_homePage);
 
             _toolsOtherPage = new ToolsOtherPage(_toolsOtherView, _header, "Tools & Other", _toolsPage, _websitesPage, _youtubePage, _aboutUsPage);
-            _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage);
+            _sideMenuPage = new SideMenuPage(_sideMenuView, _header, "", _homePage, _shoppingListPage, _aboutUsPage, _toolsOtherPage, _settingsPage);
             _menu = new Menu(_footerView, _header, "", _homePage, _lessonsPage, _lessonPage, _recipePage, _recipesPage, _collectionsPage, _toolsOtherPage);
             _header.OnCart += () => _menu.ChangePageTo(null, _shoppingListPage, _toolsOtherPage, _collectionsPage, _recipePage, _recipesPage, _settingsPage);
             _header.OnSettings += () => _menu.ChangePageTo(null, _settingsPage, _toolsOtherPage, _collectionsPage,

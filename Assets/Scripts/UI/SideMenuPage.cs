@@ -16,10 +16,12 @@ public class SideMenuPage : BasePage
     private AboutUsPage _aboutUsPage;
     private ToolsOtherPage _otherPage;
     private ShoppingListPage _shoppingListPage;
+    private SettingsPage _settingsPage;
     private Header _header;
     
-    public SideMenuPage(VisualElement root, Header header, string name, HomePage homePage, ShoppingListPage shoppingListPage, AboutUsPage aboutUs, ToolsOtherPage otherPage) : base(root, header, name)
+    public SideMenuPage(VisualElement root, Header header, string name, HomePage homePage, ShoppingListPage shoppingListPage, AboutUsPage aboutUs, ToolsOtherPage otherPage, SettingsPage settingsPage) : base(root, header, name)
     {
+        _settingsPage = settingsPage;
         _header = header;
         _homePage = homePage;
         _shoppingListPage = shoppingListPage;
@@ -49,6 +51,7 @@ public class SideMenuPage : BasePage
         _toolsSide.RegisterCallback<ClickEvent>(HideSideMenu);
         _aboutSide.RegisterCallback<ClickEvent>(evt => ChangePageTo(_aboutUsPage, _shoppingListPage, _otherPage));
         _aboutSide.RegisterCallback<ClickEvent>(HideSideMenu);
+        _settingsSide.RegisterCallback<ClickEvent>(evt => ChangePageTo(_settingsPage, _shoppingListPage, _otherPage, _aboutUsPage));
     }
     private void HideSideMenu(ClickEvent evt)
     {

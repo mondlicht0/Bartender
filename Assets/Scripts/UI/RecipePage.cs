@@ -134,6 +134,11 @@ public class RecipePage : BasePage
             _currentDrink.IsInList = true;
         }
     }
+
+    private void CheckIsInList()
+    {
+        _shoppingLabel.text = !_currentDrink.IsInList ? "Add to\n shopping list" : "Remove from\n shopping list";
+    }
     
     public void ChangePageContent()
     {
@@ -165,11 +170,11 @@ public class RecipePage : BasePage
         }
         
         Stars(PlayerPrefs.GetInt(drink.Name, 0));
+        CheckIsInList();
     }
     
     public void ChangePageContent(Drink drink)
     {
-        Debug.Log(drink == null);
         List<string> points = drink.Points;
 
         List<Label> pointsList = _drinkPoints;
@@ -196,5 +201,6 @@ public class RecipePage : BasePage
         }
         
         Stars(PlayerPrefs.GetInt(drink.Name, 0));
+        CheckIsInList();
     }
 }

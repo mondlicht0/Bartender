@@ -61,19 +61,14 @@ public class LessonsPage : BasePage
         
         _lesson2_1.RegisterCallback<ClickEvent>(evt => ShowLessonPage(0, _lessons2));
         _lesson2_2.RegisterCallback<ClickEvent>(evt => ShowLessonPage(1, _lessons2));
-        _lesson1_3.RegisterCallback<ClickEvent>(evt => ShowLessonPage(2, _lessons2));
-        _lesson1_4.RegisterCallback<ClickEvent>(evt => ShowLessonPage(3, _lessons2));
-        _lesson1_5.RegisterCallback<ClickEvent>(evt => ShowLessonPage(4, _lessons2));
+        _lesson2_3.RegisterCallback<ClickEvent>(evt => ShowLessonPage(2, _lessons2));
+        _lesson2_4.RegisterCallback<ClickEvent>(evt => ShowLessonPage(3, _lessons2));
+        _lesson2_5.RegisterCallback<ClickEvent>(evt => ShowLessonPage(4, _lessons2));
     }
 
     private void ShowLessonPage(int index, List<Lesson> lessons)
     {
         ChangePageTo(_lessonPage);
-        Debug.Log(lessons[index] == null);
-        Debug.Log( lessons[index].FirstParagraph == null);
-        Debug.Log(lessons[index].SecondParapgraph == null);
-        Debug.Log(lessons[index].ThirdParagraph == null);
-        Debug.Log(lessons[index].ImagePath == null);
         _lessonPage.ChangeContent(lessons[index].Title, lessons[index].FirstParagraph, lessons[index].SecondParapgraph, lessons[index].ThirdParagraph, lessons[index].ImagePath);
     }
 
